@@ -1,8 +1,9 @@
 {
   "name": "p6-cdk-website-plus",
+  "description": "P6 Static Website",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pgollucci/p6-cdk-website-plus.git"
+    "url": "https://github.com/p6m7g8/p6-cdk-website-plus"
   },
   "scripts": {
     "build": "npx projen build",
@@ -31,7 +32,7 @@
   "author": {
     "name": "Philip M. Gollucci",
     "email": "pgollucci@p6m7g8.com",
-    "organization": false
+    "organization": true
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
@@ -39,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk-lib": "2.1.0",
+    "cdk-dia": "^0.10.0",
     "constructs": "10.0.5",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
@@ -62,7 +64,14 @@
     "constructs": "^10.0.5"
   },
   "keywords": [
-    "cdk"
+    "aws",
+    "cdk",
+    "cloudfront",
+    "p6",
+    "p6m7g8",
+    "s3",
+    "static",
+    "website"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",
@@ -108,7 +117,7 @@
     }
   },
   "types": "lib/index.d.ts",
-  "stability": "stable",
+  "stability": "experimental",
   "jsii": {
     "outdir": "dist",
     "targets": {},
