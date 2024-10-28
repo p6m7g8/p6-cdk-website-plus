@@ -3,6 +3,7 @@ import * as cdk from 'aws-cdk-lib'
 import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager'
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront'
 import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins'
+import * as iam from 'aws-cdk-lib/aws-iam'
 import * as route53 from 'aws-cdk-lib/aws-route53'
 import * as route53targets from 'aws-cdk-lib/aws-route53-targets'
 import * as s3 from 'aws-cdk-lib/aws-s3'
@@ -21,21 +22,18 @@ export class P6CDKWebsitePlus extends cdk.Resource {
       domainName: props.hostedZoneName,
     })
 
-    const www_certificate = new certificatemanager.Certificate(
-      this,
-      'WWW-Certificate',
-      {
-        domainName: props.cloudfrontRecordName,
-        validation: certificatemanager.CertificateValidation.fromEmail({
-          email: props.verifyEmail,
-        }),
-      },
-    )
+    const certificate = new certificatemanager.Certificate(this, 'Certificate', {
+      domainName: props.hostedZoneName,
+      subjectAlternativeNames: [props.cloudfrontRecordName],
+      validation: certificatemanager.CertificateValidation.fromEmail({
+        email: props.verifyEmail,
+      }),
+    })
 
     const bucket = new s3.Bucket(this, 'MyBucket', {
       accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
-      publicReadAccess: true,
+      publicReadAccess: false, // Set to false because we're using Origin Access Identity
       websiteIndexDocument: 'index.html',
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       cors: [
@@ -47,26 +45,78 @@ export class P6CDKWebsitePlus extends cdk.Resource {
         },
       ],
     })
+
     const oai = new cloudfront.OriginAccessIdentity(this, 'OAI')
+    bucket.grantRead(oai) // Grant read permissions to the Origin Access Identity
+
+    const logBucket = new s3.Bucket(this, 'LogBucket', {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+    })
+
+    // Grant CloudFront permission to write logs to the log bucket
+    logBucket.addToResourcePolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: ['s3:PutObject'],
+      resources: [logBucket.arnForObjects('*')],
+      principals: [new iam.ServicePrincipal('delivery.logs.amazonaws.com')],
+      conditions: {
+        StringEquals: {
+          'aws:SourceAccount': cdk.Aws.ACCOUNT_ID,
+        },
+        ArnLike: {
+          'aws:SourceArn': `arn:aws:cloudfront::${cdk.Aws.ACCOUNT_ID}:distribution/*`,
+        },
+      },
+    }))
+
+    const cachePolicy = new cloudfront.CachePolicy(this, 'CachePolicy', {
+      defaultTtl: cdk.Duration.days(1),
+      minTtl: cdk.Duration.seconds(0),
+      maxTtl: cdk.Duration.days(365),
+      cookieBehavior: cloudfront.CacheCookieBehavior.none(),
+      headerBehavior: cloudfront.CacheHeaderBehavior.none(),
+      queryStringBehavior: cloudfront.CacheQueryStringBehavior.none(),
+      enableAcceptEncodingGzip: true,
+      enableAcceptEncodingBrotli: true,
+    })
+
     const distribution = new cloudfront.Distribution(this, 'Distribution', {
+      defaultRootObject: 'index.html',
+      comment: props.cloudfrontRecordName,
+      enabled: true,
+      priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
+      domainNames: [props.hostedZoneName, props.cloudfrontRecordName],
+      certificate,
+      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
       defaultBehavior: {
         origin: new cloudfront_origins.S3Origin(bucket, {
-          originAccessIdentity: oai, // If you're using an Origin Access Identity
+          originAccessIdentity: oai,
         }),
-        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        cachePolicy,
       },
-      domainNames: [props.cloudfrontRecordName],
-      certificate: www_certificate,
-      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
+      enableLogging: true,
+      logBucket,
+      logIncludesCookies: true,
     })
 
     const cloudfrontTarget = route53.RecordTarget.fromAlias(
       new route53targets.CloudFrontTarget(distribution),
     )
 
-    new route53.ARecord(this, 'CloudfrontDnsRecord', {
+    new route53.ARecord(this, 'CloudfrontDnsRecordWWW', {
       zone: hostedZone,
       recordName: props.cloudfrontRecordName,
+      target: cloudfrontTarget,
+    })
+
+    new route53.ARecord(this, 'CloudfrontDnsRecordRoot', {
+      zone: hostedZone,
+      recordName: props.hostedZoneName,
       target: cloudfrontTarget,
     })
   }

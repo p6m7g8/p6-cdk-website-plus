@@ -1,10 +1,8 @@
-import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
 import { Template } from 'aws-cdk-lib/assertions'
-
 import { P6CDKWebsitePlus } from '../src'
 
-it('p6 cdk website plus components', () => {
+it('p6CDKWebsitePlus snapshot test', () => {
   // GIVEN
   const theEnv = {
     account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
@@ -21,6 +19,6 @@ it('p6 cdk website plus components', () => {
   })
 
   // THEN
-  const template = Template.fromStack(stack)
-  template.resourceCountIs('AWS::Lambda::Function', 0) // Custom Resource Handler counts too
+  const template = Template.fromStack(stack).toJSON()
+  expect(template).toMatchSnapshot()
 })
