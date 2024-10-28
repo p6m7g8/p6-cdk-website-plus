@@ -5,6 +5,7 @@ import * as cloudfront from 'aws-cdk-lib/aws-cloudfront'
 import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as route53 from 'aws-cdk-lib/aws-route53'
+import * as route53Patterns from 'aws-cdk-lib/aws-route53-patterns'
 import * as route53targets from 'aws-cdk-lib/aws-route53-targets'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 
@@ -18,10 +19,12 @@ export class P6CDKWebsitePlus extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6CDKWebsiteProps) {
     super(scope, id)
 
+    // Lookup for the hosted zone
     const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
       domainName: props.hostedZoneName,
     })
 
+    // Create the certificate for the domain
     const certificate = new certificatemanager.Certificate(this, 'Certificate', {
       domainName: props.hostedZoneName,
       subjectAlternativeNames: [props.cloudfrontRecordName],
@@ -30,6 +33,7 @@ export class P6CDKWebsitePlus extends cdk.Resource {
       }),
     })
 
+    // Define the S3 bucket for website hosting
     const bucket = new s3.Bucket(this, 'MyBucket', {
       accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
@@ -108,16 +112,24 @@ export class P6CDKWebsitePlus extends cdk.Resource {
       new route53targets.CloudFrontTarget(distribution),
     )
 
+    // Create both A (IPv4) and AAAA (IPv6) DNS records for www.gollucci.com (cloudfrontRecordName)
     new route53.ARecord(this, 'CloudfrontDnsRecordWWW', {
       zone: hostedZone,
       recordName: props.cloudfrontRecordName,
       target: cloudfrontTarget,
     })
 
-    new route53.ARecord(this, 'CloudfrontDnsRecordRoot', {
+    new route53.AaaaRecord(this, 'CloudfrontDnsRecordAAAAWWW', {
       zone: hostedZone,
-      recordName: props.hostedZoneName,
+      recordName: props.cloudfrontRecordName,
       target: cloudfrontTarget,
+    })
+
+    // Use HttpsRedirect for redirecting root domain (hostedZoneName) to www
+    new route53Patterns.HttpsRedirect(this, 'Redirect', {
+      recordNames: [props.hostedZoneName], // Redirect root domain
+      targetDomain: props.cloudfrontRecordName, // Redirect to www
+      zone: hostedZone,
     })
   }
 }
