@@ -1,0 +1,132 @@
+digraph "Diagram" {
+  splines = "ortho";
+  pad = "1.0";
+  nodesep = "0.60";
+  ranksep = "0.75";
+  fontname = "Sans-Serif";
+  fontsize = "15";
+  dpi = "200";
+  rankdir = "BT";
+  compound = "true";
+  fontcolor = "#222222";
+  edge [
+    color = "#D5871488",
+    penwidth = 2,
+    arrowhead = "dot",
+    arrowtail = "dot",
+  ];
+  node [
+    shape = "box",
+    style = "rounded",
+    fixedsize = true,
+    width = 1.7,
+    height = 1.7,
+    labelloc = "c",
+    imagescale = true,
+    fontname = "Sans-Serif",
+    fontsize = 8,
+    margin = 8,
+  ];
+  subgraph "VisualizeStack" {
+    subgraph "cluster-SubGraph.VisualizeStack" {
+      graph [
+        label = "VisualizeStack",
+        labelloc = "b",
+        labeljust = "l",
+        margin = "10",
+        fontsize = "16",
+        penwidth = "2",
+        pencolor = "#888888",
+        style = "filled,rounded",
+        fillcolor = "#e4e4e4",
+      ];
+      subgraph "cluster-SubGraph.MyWebsite" {
+        graph [
+          label = "MyWebsite",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#d6d6d6",
+        ];
+        "VisualizeStack/MyWebsite/WWW-Certificate" [
+          label = " WWW-Certificate",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "VisualizeStack/MyWebsite/MyBucket" [
+          label = " MyBucket",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "VisualizeStack/MyWebsite/OAI" [
+          label = " OAI",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Security-Identity-and-Compliance/Res_48_Dark/Res_AWS-Identity-Access-Management_Permissions_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "VisualizeStack/MyWebsite/Distribution" [
+          label = " Distribution",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "VisualizeStack/MyWebsite/CloudfrontDnsRecord" [
+          label = " CloudfrontDnsRecord",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+      }
+    }
+  }
+  "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/WWW-Certificate" [
+    dir = "both",
+  ];
+  "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/MyBucket" [
+    dir = "both",
+  ];
+  "VisualizeStack/MyWebsite/CloudfrontDnsRecord" -> "VisualizeStack/MyWebsite/Distribution" [
+    dir = "both",
+  ];
+}
