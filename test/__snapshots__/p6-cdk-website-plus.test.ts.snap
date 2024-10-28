@@ -1,0 +1,392 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`p6CDKWebsitePlus snapshot test 1`] = `
+{
+  "Mappings": {
+    "AWSCloudFrontPartitionHostedZoneIdMap": {
+      "aws": {
+        "zoneId": "Z2FDTNDATAQYW2",
+      },
+      "aws-cn": {
+        "zoneId": "Z3RFFRIM2A3IF5",
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "p6cdkwebsiteplusCachePolicyB3E25F40": {
+      "Properties": {
+        "CachePolicyConfig": {
+          "DefaultTTL": 86400,
+          "MaxTTL": 31536000,
+          "MinTTL": 0,
+          "Name": "MyStackp6cdkwebsiteplusCachePolicyEDFF9D09-us-east-1",
+          "ParametersInCacheKeyAndForwardedToOrigin": {
+            "CookiesConfig": {
+              "CookieBehavior": "none",
+            },
+            "EnableAcceptEncodingBrotli": true,
+            "EnableAcceptEncodingGzip": true,
+            "HeadersConfig": {
+              "HeaderBehavior": "none",
+            },
+            "QueryStringsConfig": {
+              "QueryStringBehavior": "none",
+            },
+          },
+        },
+      },
+      "Type": "AWS::CloudFront::CachePolicy",
+    },
+    "p6cdkwebsiteplusCertificate363867BF": {
+      "Properties": {
+        "DomainName": "p6m7g8.org",
+        "DomainValidationOptions": [
+          {
+            "DomainName": "p6m7g8.org",
+            "ValidationDomain": "p6m7g8.org",
+          },
+          {
+            "DomainName": "www.p6m7g8.org",
+            "ValidationDomain": "p6m7g8.org",
+          },
+        ],
+        "SubjectAlternativeNames": [
+          "www.p6m7g8.org",
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "MyStack/p6-cdk-website-plus/Certificate",
+          },
+        ],
+        "ValidationMethod": "EMAIL",
+      },
+      "Type": "AWS::CertificateManager::Certificate",
+    },
+    "p6cdkwebsiteplusCloudfrontDnsRecordRoot34942DD8": {
+      "Properties": {
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "p6cdkwebsiteplusDistribution75B33D1D",
+              "DomainName",
+            ],
+          },
+          "HostedZoneId": {
+            "Fn::FindInMap": [
+              "AWSCloudFrontPartitionHostedZoneIdMap",
+              {
+                "Ref": "AWS::Partition",
+              },
+              "zoneId",
+            ],
+          },
+        },
+        "HostedZoneId": "DUMMY",
+        "Name": "p6m7g8.org.",
+        "Type": "A",
+      },
+      "Type": "AWS::Route53::RecordSet",
+    },
+    "p6cdkwebsiteplusCloudfrontDnsRecordWWW266C1732": {
+      "Properties": {
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "p6cdkwebsiteplusDistribution75B33D1D",
+              "DomainName",
+            ],
+          },
+          "HostedZoneId": {
+            "Fn::FindInMap": [
+              "AWSCloudFrontPartitionHostedZoneIdMap",
+              {
+                "Ref": "AWS::Partition",
+              },
+              "zoneId",
+            ],
+          },
+        },
+        "HostedZoneId": "DUMMY",
+        "Name": "www.p6m7g8.org.",
+        "Type": "A",
+      },
+      "Type": "AWS::Route53::RecordSet",
+    },
+    "p6cdkwebsiteplusDistribution75B33D1D": {
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
+            "p6m7g8.org",
+            "www.p6m7g8.org",
+          ],
+          "Comment": "www.p6m7g8.org",
+          "DefaultCacheBehavior": {
+            "AllowedMethods": [
+              "GET",
+              "HEAD",
+            ],
+            "CachePolicyId": {
+              "Ref": "p6cdkwebsiteplusCachePolicyB3E25F40",
+            },
+            "Compress": true,
+            "TargetOriginId": "MyStackp6cdkwebsiteplusDistributionOrigin11194C0BD",
+            "ViewerProtocolPolicy": "redirect-to-https",
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "IPV6Enabled": true,
+          "Logging": {
+            "Bucket": {
+              "Fn::GetAtt": [
+                "p6cdkwebsiteplusLogBucket1DBBB6EA",
+                "RegionalDomainName",
+              ],
+            },
+            "IncludeCookies": true,
+          },
+          "Origins": [
+            {
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "http-only",
+                "OriginSSLProtocols": [
+                  "TLSv1.2",
+                ],
+              },
+              "DomainName": {
+                "Fn::Select": [
+                  2,
+                  {
+                    "Fn::Split": [
+                      "/",
+                      {
+                        "Fn::GetAtt": [
+                          "p6cdkwebsiteplusMyBucket91F315D6",
+                          "WebsiteURL",
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              "Id": "MyStackp6cdkwebsiteplusDistributionOrigin11194C0BD",
+            },
+          ],
+          "PriceClass": "PriceClass_100",
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Ref": "p6cdkwebsiteplusCertificate363867BF",
+            },
+            "MinimumProtocolVersion": "TLSv1.2_2021",
+            "SslSupportMethod": "sni-only",
+          },
+        },
+      },
+      "Type": "AWS::CloudFront::Distribution",
+    },
+    "p6cdkwebsiteplusLogBucket1DBBB6EA": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256",
+              },
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "p6cdkwebsiteplusLogBucketPolicy866A9602": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "p6cdkwebsiteplusLogBucket1DBBB6EA",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:PutObject",
+              "Condition": {
+                "ArnLike": {
+                  "aws:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:cloudfront::",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":distribution/*",
+                      ],
+                    ],
+                  },
+                },
+                "StringEquals": {
+                  "aws:SourceAccount": {
+                    "Ref": "AWS::AccountId",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "delivery.logs.amazonaws.com",
+              },
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "p6cdkwebsiteplusLogBucket1DBBB6EA",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "p6cdkwebsiteplusMyBucket91F315D6": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AccessControl": "BucketOwnerFullControl",
+        "CorsConfiguration": {
+          "CorsRules": [
+            {
+              "AllowedHeaders": [
+                "*",
+              ],
+              "AllowedMethods": [
+                "GET",
+                "PUT",
+              ],
+              "AllowedOrigins": [
+                "*",
+              ],
+              "MaxAge": 3000,
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "IgnorePublicAcls": true,
+        },
+        "WebsiteConfiguration": {
+          "IndexDocument": "index.html",
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "p6cdkwebsiteplusMyBucketPolicyE7D8D7E9": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "p6cdkwebsiteplusMyBucket91F315D6",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "CanonicalUser": {
+                  "Fn::GetAtt": [
+                    "p6cdkwebsiteplusOAIC7AC1AD0",
+                    "S3CanonicalUserId",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "p6cdkwebsiteplusMyBucket91F315D6",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "p6cdkwebsiteplusMyBucket91F315D6",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "p6cdkwebsiteplusOAIC7AC1AD0": {
+      "Properties": {
+        "CloudFrontOriginAccessIdentityConfig": {
+          "Comment": "Allows CloudFront to reach the bucket",
+        },
+      },
+      "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

@@ -52,8 +52,8 @@ digraph "Diagram" {
           style = "filled,rounded",
           fillcolor = "#d6d6d6",
         ];
-        "VisualizeStack/MyWebsite/WWW-Certificate" [
-          label = " WWW-Certificate",
+        "VisualizeStack/MyWebsite/Certificate" [
+          label = " Certificate",
           fontsize = 12,
           image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png",
           imagescale = "true",
@@ -91,6 +91,32 @@ digraph "Diagram" {
           width = 2,
           height = 2.266,
         ];
+        "VisualizeStack/MyWebsite/LogBucket" [
+          label = " LogBucket",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "VisualizeStack/MyWebsite/CachePolicy" [
+          label = " CachePolicy",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
         "VisualizeStack/MyWebsite/Distribution" [
           label = " Distribution",
           fontsize = 12,
@@ -104,8 +130,8 @@ digraph "Diagram" {
           width = 2,
           height = 2.266,
         ];
-        "VisualizeStack/MyWebsite/CloudfrontDnsRecord" [
-          label = " CloudfrontDnsRecord",
+        "VisualizeStack/MyWebsite/CloudfrontDnsRecordWWW" [
+          label = "\nCloudfrontDnsRecordWW",
           fontsize = 12,
           image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png",
           imagescale = "true",
@@ -115,18 +141,43 @@ digraph "Diagram" {
           fixedsize = "true",
           labelloc = "b",
           width = 1.2,
-          height = 1.466,
+          height = 1.682,
+        ];
+        "VisualizeStack/MyWebsite/CloudfrontDnsRecordRoot" [
+          label = "\nCloudfrontDnsRecordRo",
+          fontsize = 12,
+          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.682,
         ];
       }
     }
   }
-  "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/WWW-Certificate" [
+  "VisualizeStack/MyWebsite/MyBucket" -> "VisualizeStack/MyWebsite/OAI" [
+    dir = "both",
+  ];
+  "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/Certificate" [
     dir = "both",
   ];
   "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/MyBucket" [
     dir = "both",
   ];
-  "VisualizeStack/MyWebsite/CloudfrontDnsRecord" -> "VisualizeStack/MyWebsite/Distribution" [
+  "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/LogBucket" [
+    dir = "both",
+  ];
+  "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/CachePolicy" [
+    dir = "both",
+  ];
+  "VisualizeStack/MyWebsite/CloudfrontDnsRecordWWW" -> "VisualizeStack/MyWebsite/Distribution" [
+    dir = "both",
+  ];
+  "VisualizeStack/MyWebsite/CloudfrontDnsRecordRoot" -> "VisualizeStack/MyWebsite/Distribution" [
     dir = "both",
   ];
 }
