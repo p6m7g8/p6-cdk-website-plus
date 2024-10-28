@@ -57,7 +57,8 @@ export class P6CDKWebsitePlus extends cdk.Resource {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       encryption: s3.BucketEncryption.S3_MANAGED,
       publicReadAccess: false,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      accessControl: s3.BucketAccessControl.LOG_DELIVERY_WRITE, // Enable ACLs for CloudFront logging
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS, // Allow ACLs for logging while blocking public access
     })
 
     // Grant CloudFront permission to write logs to the log bucket
