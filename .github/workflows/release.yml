@@ -36,7 +36,7 @@ jobs:
             echo "bump=false" >> $GITHUB_OUTPUT
           fi
       - name: Github Release
-        if: ${{ steps.bump == 'true' }}
+        if: ${{ steps.bump.outputs.bump == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
