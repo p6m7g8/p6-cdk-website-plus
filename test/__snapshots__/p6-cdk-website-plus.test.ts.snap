@@ -195,6 +195,7 @@ exports[`p6CDKWebsitePlus snapshot test 1`] = `
     "p6cdkwebsiteplusLogBucket1DBBB6EA": {
       "DeletionPolicy": "Delete",
       "Properties": {
+        "AccessControl": "LogDeliveryWrite",
         "BucketEncryption": {
           "ServerSideEncryptionConfiguration": [
             {
@@ -204,11 +205,16 @@ exports[`p6CDKWebsitePlus snapshot test 1`] = `
             },
           ],
         },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "ObjectWriter",
+            },
+          ],
+        },
         "PublicAccessBlockConfiguration": {
           "BlockPublicAcls": true,
-          "BlockPublicPolicy": true,
           "IgnorePublicAcls": true,
-          "RestrictPublicBuckets": true,
         },
       },
       "Type": "AWS::S3::Bucket",
