@@ -31,7 +31,7 @@ main() {
 
   mkdir -p dist/
   echo $new_tag >dist/releasetag.txt
-  echo "$log_lines" >dist/changelog.md
+  echo "$log_lines" | grep -v "chore(release):" >dist/changelog.md
   echo "Semantic version tag: $latest_tag -> $new_tag"
   cat dist/changelog.md
 
