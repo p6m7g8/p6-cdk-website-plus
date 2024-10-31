@@ -78,19 +78,6 @@ digraph "Diagram" {
           width = 2,
           height = 2.266,
         ];
-        "VisualizeStack/MyWebsite/OAI" [
-          label = " OAI",
-          fontsize = 12,
-          image = "/Users/pgollucci/.p6/p6m7g8/p6-cdk-website-plus/node_modules/cdk-dia/icons/aws/Resource/Res_Security-Identity-and-Compliance/Res_48_Dark/Res_AWS-Identity-Access-Management_Permissions_48_Dark_gen.png",
-          imagescale = "true",
-          imagepos = "tc",
-          penwidth = "0",
-          shape = "node",
-          fixedsize = "true",
-          labelloc = "b",
-          width = 2,
-          height = 2.266,
-        ];
         "VisualizeStack/MyWebsite/LogBucket" [
           label = " LogBucket",
           fontsize = 12,
@@ -263,9 +250,6 @@ digraph "Diagram" {
       }
     }
   }
-  "VisualizeStack/MyWebsite/MyBucket" -> "VisualizeStack/MyWebsite/OAI" [
-    dir = "both",
-  ];
   "VisualizeStack/MyWebsite/Distribution" -> "VisualizeStack/MyWebsite/Certificate" [
     dir = "both",
   ];
