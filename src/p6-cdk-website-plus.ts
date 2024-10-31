@@ -93,7 +93,7 @@ export class P6CDKWebsitePlus extends cdk.Resource {
       comment: props.cloudfrontRecordName,
       enabled: true,
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
-      domainNames: [props.hostedZoneName, props.cloudfrontRecordName],
+      domainNames: [props.cloudfrontRecordName], // Use only one domain to avoid conflicts
       certificate,
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
       defaultBehavior: {
