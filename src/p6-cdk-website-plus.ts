@@ -36,8 +36,7 @@ export class P6CDKWebsitePlus extends cdk.Resource {
     // Define the S3 bucket for website hosting
     const bucket = new s3.Bucket(this, 'MyBucket', {
       accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
-      publicReadAccess: false, // Set to false because we're using Origin Access Identity
+      publicReadAccess: true, // Required for static website hosting to work with CloudFront
       websiteIndexDocument: 'index.html',
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       cors: [
@@ -48,10 +47,8 @@ export class P6CDKWebsitePlus extends cdk.Resource {
           maxAge: 3000,
         },
       ],
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS, // Allows public access via bucket policy
     })
-
-    const oai = new cloudfront.OriginAccessIdentity(this, 'OAI')
-    bucket.grantRead(oai) // Grant read permissions to the Origin Access Identity
 
     const logBucket = new s3.Bucket(this, 'LogBucket', {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -97,9 +94,7 @@ export class P6CDKWebsitePlus extends cdk.Resource {
       certificate,
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
       defaultBehavior: {
-        origin: new cloudfront_origins.S3Origin(bucket, {
-          originAccessIdentity: oai,
-        }),
+        origin: new cloudfront_origins.S3StaticWebsiteOrigin(bucket),
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy,
