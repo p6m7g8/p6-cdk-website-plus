@@ -27,3 +27,4 @@ jobs:
           twine_password: ${{ secrets.TWINE_PASSWORD }}
           nuget_api_key: ${{ secrets.NUGET_API_KEY }}
           go_github_token: ${{ secrets.GO_GITHUB_TOKEN }}
+          p6_a_gh_token: ${{ secrets.P6_A_GH_TOKEN }}
