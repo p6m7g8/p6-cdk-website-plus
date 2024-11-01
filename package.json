@@ -36,7 +36,7 @@
     "publish:maven": "npx publib-maven",
     "publish:npm": "npx publib-npm",
     "publish:pypi": "npx publib-pypi",
-    "reset": "yarn run nuke && rm -f yarn-lock.yaml",
+    "reset": "yarn run nuke && rm -f yarn.lock",
     "synth": "yarn cdk synth",
     "test": "node --max-old-space-size=4096 --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.js --coverage --updateSnapshot",
     "test:watch": "node --max-old-space-size=4096 --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.js --watch --coverage --updateSnapshot",
