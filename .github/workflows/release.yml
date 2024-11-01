@@ -15,7 +15,7 @@ jobs:
       image: jsii/superchain:1-bookworm-slim-node22
     steps:
       - name: CDK Construct Build & Release
-        uses: p6m7g8-actions/cdk-consruct-release@main
+        uses: p6m7g8-actions/cdk-construct-release@main
         with:
           aws_region: ${{ secrets.CDK_DEPLOY_REGION }}
           aws_role: ${{ secrets.AWS_ROLE }}
