@@ -49,6 +49,7 @@
     "packmak",
     "pacmak",
     "publib",
-    "Sonarcloud"
+    "Sonarcloud",
+    "superchain"
   ],
 }
