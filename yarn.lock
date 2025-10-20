@@ -7475,9 +7475,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsii-rosetta@npm:^5.9.10":
-  version: 5.9.10
-  resolution: "jsii-rosetta@npm:5.9.10"
+"jsii-rosetta@npm:^5.9.11":
+  version: 5.9.11
+  resolution: "jsii-rosetta@npm:5.9.11"
   dependencies:
     "@jsii/check-node": "npm:^1.116.0"
     "@jsii/spec": "npm:^1.116.0"
@@ -7494,11 +7494,33 @@ __metadata:
     yargs: "npm:^17.7.2"
   bin:
     jsii-rosetta: bin/jsii-rosetta
-  checksum: 10c0/22e7a9e3a5e8f110d3956d0ea83d568e86470f322596b848ee0ea61e37ae6aa8ba2a71cd7e5b093262df583ef540e1de303c19b69b1964c9f568ee525d2daeed
+  checksum: 10c0/e09adea58f1065101a0c2651af95c4da64e2ff7edc53de06d4cca8659ed3e0e8a35680ab4cd20f21e612701c11c8ce7a6cd8e36d0d18583b0937db48d8688235
   languageName: node
   linkType: hard
 
-"jsii@npm:^5.9.8, jsii@npm:~5.9.1":
+"jsii@npm:^5.9.10":
+  version: 5.9.10
+  resolution: "jsii@npm:5.9.10"
+  dependencies:
+    "@jsii/check-node": "npm:1.116.0"
+    "@jsii/spec": "npm:1.116.0"
+    case: "npm:^1.6.3"
+    chalk: "npm:^4"
+    fast-deep-equal: "npm:^3.1.3"
+    log4js: "npm:^6.9.1"
+    semver: "npm:^7.7.3"
+    semver-intersect: "npm:^1.5.0"
+    sort-json: "npm:^2.0.1"
+    spdx-license-list: "npm:^6.10.0"
+    typescript: "npm:~5.9"
+    yargs: "npm:^17.7.2"
+  bin:
+    jsii: bin/jsii
+  checksum: 10c0/5c46884a65b89003d36471f62cb26ccd69d6c58abe750da8ad74ab2c3d3863a4a295011bc2253f6ad7265525e1a54237ce7708296fbfddb68930af9ebf10300b
+  languageName: node
+  linkType: hard
+
+"jsii@npm:~5.9.1":
   version: 5.9.8
   resolution: "jsii@npm:5.9.8"
   dependencies:
@@ -8935,11 +8957,11 @@ __metadata:
     eslint-plugin-import: "npm:^2.32.0"
     http-server: "npm:^14.1.1"
     jest: "npm:^30.2.0"
-    jsii: "npm:^5.9.8"
+    jsii: "npm:^5.9.10"
     jsii-diff: "npm:^1.116.0"
     jsii-docgen: "npm:^10.10.1"
     jsii-pacmak: "npm:^1.116.0"
-    jsii-rosetta: "npm:^5.9.10"
+    jsii-rosetta: "npm:^5.9.11"
     publib: "npm:^0.2.1024"
     ts-jest: "npm:^29.4.5"
     ts-node: "npm:^10.9.2"
